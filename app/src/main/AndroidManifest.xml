@@ -13,7 +13,6 @@
         android:theme="@style/Theme.VisitorManagementApp">
         <activity android:name=".Security.CheckVisitBySecurity"></activity>
         <activity android:name=".Security.AddVisitBySecurity" />
-        <activity android:name=".Registration.FillDetailsActivity" />
         <activity android:name=".Employee.HomeScreen" />
         <activity android:name=".Security.SecurityHomeScreen" />
         <activity android:name=".Registration.LogIn" />

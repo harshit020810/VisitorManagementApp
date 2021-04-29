@@ -8,54 +8,37 @@ import android.os.Handler;
 import android.view.WindowManager;
 
 import com.example.visitormanagementapp.Employee.HomeScreen;
-import com.example.visitormanagementapp.Registration.FillDetailsActivity;
 import com.example.visitormanagementapp.Registration.RegistrationActivity;
 import com.example.visitormanagementapp.Security.SecurityHomeScreen;
 import com.example.visitormanagementapp.SharedPrefrence.SharedPreference;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashScreen extends AppCompatActivity {
 
-    SharedPreference sharedPreference;
+    FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    FirebaseUser user;
+    SharedPreference sharedPreference = new SharedPreference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_screen);
-        sharedPreference = new SharedPreference();
+        user = mAuth.getCurrentUser();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                if(sharedPreference.checkSessionFromSecurity(getApplicationContext())){
-                    if(sharedPreference.addExtraInformation(getApplicationContext(), "Security")){
-                        startActivity(new Intent(getApplicationContext(), SecurityHomeScreen.class));
-                        finish();
+                if(user == null){
+                    startActivity(new Intent(SplashScreen.this, RegistrationActivity.class));
+                }else{
+                    if(sharedPreference.checkSessionFromEmployee(getApplicationContext())){
+                        startActivity(new Intent(SplashScreen.this, HomeScreen.class));
                     }else{
-                        Intent intent = new Intent(getApplicationContext(), FillDetailsActivity.class);
-                        intent.putExtra("UserStatus", "Security");
-                        startActivity(intent);
-                        finish();
+                        startActivity(new Intent(SplashScreen.this, SecurityHomeScreen.class));
                     }
-
                 }
-
-                else if(sharedPreference.checkSessionFromEmployee(getApplicationContext())){
-                    if(sharedPreference.addExtraInformation(getApplicationContext(), "Employee")){
-                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-                        finish();
-                    }else{
-                        Intent intent = new Intent(getApplicationContext(), FillDetailsActivity.class);
-                        intent.putExtra("UserStatus", "Employee");
-                        startActivity(intent);
-                        finish();
-                    }
-
-                }
-                else{
-                    startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
-                    finish();
-                }
+                finish();
             }
         }, 3000);
     }

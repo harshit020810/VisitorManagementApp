@@ -27,7 +27,7 @@
                 android:fontFamily="@font/dancing_script_bold"/>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/idLayout"
+                android:id="@+id/emailIdLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
@@ -36,11 +36,29 @@
                 app:hintEnabled="true">
 
                 <EditText
-                    android:id="@+id/identificationNumber"
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:hint="Email Address"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contactLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/white"
+                android:layout_below="@id/emailIdLayout"
+                android:layout_marginTop="16dp"
+                app:hintEnabled="true">
+
+                <EditText
+                    android:id="@+id/contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:hint="Identification Number"/>
+                    android:hint="Contact"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
-                android:layout_below="@id/idLayout"
+                android:layout_below="@id/contactLayout"
                 android:layout_marginTop="16dp"
                 app:passwordToggleEnabled="true"
                 app:hintEnabled="true">

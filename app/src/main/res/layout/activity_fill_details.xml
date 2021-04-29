@@ -64,6 +64,26 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/idLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/white"
+                app:hintEnabled="true"
+                android:layout_below="@id/contactLayout"
+                android:layout_marginTop="16dp"
+                android:elevation="10dp">
+
+                <EditText
+                    android:id="@+id/identificationNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Identification Number"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/departmentLayout"
@@ -71,7 +91,7 @@
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
                 app:hintEnabled="true"
-                android:layout_below="@id/contactLayout"
+                android:layout_below="@id/idLayout"
                 android:layout_marginTop="16dp"
                 android:elevation="10dp">
 

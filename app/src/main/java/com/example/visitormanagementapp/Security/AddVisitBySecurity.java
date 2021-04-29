@@ -8,13 +8,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.example.visitormanagementapp.R;
-import com.example.visitormanagementapp.Database.DatabaseRoomForExtra;
-import com.example.visitormanagementapp.Interfaces.RoomDao;
-import com.example.visitormanagementapp.Interfaces.RoomDaoForVisit;
-import com.example.visitormanagementapp.Models.RoomEntityForVisit;
 import com.example.visitormanagementapp.databinding.ActivityAddVisitBySecurityBinding;
 
 import java.util.ArrayList;
@@ -23,11 +18,6 @@ import java.util.List;
 public class AddVisitBySecurity extends AppCompatActivity {
 
     ActivityAddVisitBySecurityBinding binding;
-
-    RoomEntityForVisit roomEntityForVisit;
-    RoomDaoForVisit roomDaoForVisit;
-    RoomDao roomDao;
-    DatabaseRoomForExtra databaseRoomForExtra;
 
     String vehicleResponse, assetsResponse, imageUrl = " ", idBack, id;
 
@@ -172,38 +162,6 @@ public class AddVisitBySecurity extends AppCompatActivity {
         }
 
         if (isValid) {
-
-            databaseRoomForExtra = DatabaseRoomForExtra.getDatabaseRoom(this);
-            roomDao = databaseRoomForExtra.roomDao();
-            roomDaoForVisit = databaseRoomForExtra.roomDaoForVisit();
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    list = roomDao.getId(hostResponse, departmentResponse);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            roomEntityForVisit = new RoomEntityForVisit(binding.contact.getText().toString(), binding.visitor.getText().toString(), binding.company.getText().toString(),
-                                    binding.place.getText().toString(), hostResponse, departmentResponse, meetingResponse, timeResponse, vehicleResponse, assetsResponse, imageUrl, list.get(0),
-                                    true, "Processed");
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    roomDaoForVisit.insertAllForVisit(roomEntityForVisit);
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(AddVisitBySecurity.this, "Meeting Request Added", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }).start();
-                        }
-                    });
-                }
-            }).start();
-
 
         }
     }
