@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Security.CheckVisitBySecurity">
+<layout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Security.CheckVisitBySecurity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/draw_splash"
+                app:title="Check Visit" />
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <AutoCompleteTextView
+            android:id="@+id/visitorName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appLayout"
+            android:autoSizeTextType="uniform"
+            android:layout_margin="12dp"
+            android:hint="Enter visitor name: "/>
+
+        <AutoCompleteTextView
+            android:id="@+id/visitorCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/visitorName"
+            android:layout_margin="12dp"
+            android:hint="Enter visitor company: "/>
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/visitorCompany"
+            android:layout_margin="12dp"
+            android:layout_centerHorizontal="true"
+            android:text="Submit"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/submitButton"
+            android:layout_margin="12dp"/>
+
+
+    </RelativeLayout>
+</layout>

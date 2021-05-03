@@ -4,21 +4,33 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.signature.ObjectKey;
 import com.example.visitormanagementapp.R;
 import com.example.visitormanagementapp.databinding.ActivityAddVisitBySecurityBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AddVisitBySecurity extends AppCompatActivity {
 
@@ -37,7 +50,7 @@ public class AddVisitBySecurity extends AppCompatActivity {
 
     List<String> list;
 
-    String hostResponse, meetingResponse, timeResponse, departmentResponse;
+    String hostResponse, meetingResponse, timeResponse, departmentResponse, otpResponse;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
@@ -47,6 +60,9 @@ public class AddVisitBySecurity extends AppCompatActivity {
     List<String> departmentList = new ArrayList<>();
 
     HashMap<String, Object> map  = new HashMap<>();
+
+    private AlertDialog dialog;
+
 
 
     @Override
@@ -199,8 +215,11 @@ public class AddVisitBySecurity extends AppCompatActivity {
             map.put("visitorImage", imageUrl);
             map.put("request", "pending");
             map.put("active", true);
+            map.put("nameCompany", binding.visitor.getText().toString()+binding.company.getText().toString());
 
-            addVisit(map);
+           sendOtp(binding.contact.getText().toString());
+
+            //addVisit(map);
         }
     }
 
@@ -302,6 +321,87 @@ public class AddVisitBySecurity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void sendOtp(String contact) {
+
+        PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+                Log.d("OTP", "onVerificationCompleted:" + phoneAuthCredential);
+            }
+
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
+                Log.d("OTPf", "onVerificationFailed", e);
+            }
+
+            @Override
+            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                Log.d("OTPc", "onCodeSent:" + s);
+                dialogShow(s);
+            }
+        };
+
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber("+91" + contact)
+                        .setTimeout(60L, TimeUnit.SECONDS)
+                        .setActivity(this)
+                        .setCallbacks(mCallbacks)
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+
+    }
+
+
+
+    private void dialogShow(String contact) {
+        if(dialog==null){
+            AlertDialog.Builder builder=new AlertDialog.Builder(AddVisitBySecurity.this);
+            View view= LayoutInflater.from(this).inflate(R.layout.dialog_box, (ViewGroup) findViewById(R.id.otp_relative));
+            builder.setView(view);
+            dialog=builder.create();
+            final EditText otpText = view.findViewById(R.id.inputOtp);
+            if(dialog.getWindow()!=null){
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                dialog.show();
+            }
+
+
+            view.findViewById(R.id.submit_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String userOtp = otpText.getText().toString();
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(contact, userOtp);
+
+                    FirebaseAuth mAuth1 = FirebaseAuth.getInstance();
+                    mAuth1.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                addVisit(map);
+                                mAuth1.signOut();
+                                dialog.dismiss();
+                                dialog = null;
+                            }else{
+                                Toast.makeText(AddVisitBySecurity.this, "Invalid", Toast.LENGTH_SHORT).show();
+                                otpText.setError("Please enter correct otp");
+                            }
+                        }
+                    });
+
+                }
+            });
+
+            view.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    dialog=null;
+                }
+            });
+        }
     }
 
 

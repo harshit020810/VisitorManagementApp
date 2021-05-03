@@ -58,11 +58,6 @@ dependencies {
     implementation "androidx.room:room-guava:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
 
-    //View Model
-    def archLifecycleVersion = '1.1.0'
-    implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$archLifecycleVersion"
-
 
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'
 }

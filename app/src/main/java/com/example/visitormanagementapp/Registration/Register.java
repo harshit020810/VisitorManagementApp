@@ -33,7 +33,7 @@ public class Register extends AppCompatActivity {
     ActivityRegisterBinding activityRegisterBinding;
     SharedPreference sharedPreference;
     String userStatus;
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseAuth mAuth;
     String emailPattern = "^[a-zA-Z0-9_+&*-]+(?:\\." +
             "[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
@@ -47,6 +47,8 @@ public class Register extends AppCompatActivity {
 
     Uri selectedImage;
 
+    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,8 @@ public class Register extends AppCompatActivity {
         activityRegisterBinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
 
         sharedPreference = new SharedPreference();
+
+        mAuth = FirebaseAuth.getInstance();
 
         handleClickEvents();
 
@@ -167,6 +171,7 @@ public class Register extends AppCompatActivity {
 
     private void registerUser(String emailAddress, String password, String name, String contact, String department, String imageUrl, String id) {
 
+        hashMap.clear();
         hashMap.put("email", emailAddress);
         hashMap.put("password", password);
         hashMap.put("name", name);
@@ -179,11 +184,16 @@ public class Register extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    uID = mAuth.getCurrentUser().getUid();
+                    user = mAuth.getCurrentUser();
+                    saveData(contact);
                 }
             }
         });
 
+
+    }
+
+    private void saveData(String contact) {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -194,8 +204,20 @@ public class Register extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            FirebaseUser user=mAuth.getCurrentUser();
-                                            sendEmailVerification(user);
+                                            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        Toast.makeText(Register.this, "Verification Email has been sent to your email Address", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), LogIn.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }else{
+                                                        Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                }
+                                            });
                                         } else {
                                             Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
                                         }
@@ -209,8 +231,20 @@ public class Register extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            FirebaseUser user=mAuth.getCurrentUser();
-                                            sendEmailVerification(user);
+                                            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        Toast.makeText(Register.this, "Verification Email has been sent to your email Address", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(getApplicationContext(), LogIn.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }else{
+                                                        Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                }
+                                            });
                                         } else {
                                             Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
                                         }
@@ -222,25 +256,6 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
-    private void sendEmailVerification(FirebaseUser user) {
-
-        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(Register.this, "Verification Email has been sent to your email Address", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), LogIn.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
-                }
 
             }
         });

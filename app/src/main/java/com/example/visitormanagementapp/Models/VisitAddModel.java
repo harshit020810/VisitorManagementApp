@@ -2,14 +2,14 @@ package com.example.visitormanagementapp.Models;
 
 public class VisitAddModel {
 
-    private String request, visitorImage, visitorPlace, visitorName, visitorCompany, hostName, hostDepartment, vehicle, assets, contact, meetingPurpose, meetingTime;
+    private String request, visitorImage, visitorPlace, visitorName, visitorCompany, hostName, hostDepartment, vehicle, assets, contact, meetingPurpose, meetingTime, nameCompany;
     private boolean active;
 
     public VisitAddModel() {
     }
 
     public VisitAddModel(String request, String visitorImage, String visitorPlace, String visitorName, String visitorCompany, String hostName,
-                         String hostDepartment, String vehicle, String assets, String contact, String meetingPurpose, String meetingTime, Boolean active) {
+                         String hostDepartment, String vehicle, String assets, String contact, String meetingPurpose, String meetingTime, String nameCompany, Boolean active) {
         this.request = request;
         this.visitorImage = visitorImage;
         this.visitorPlace = visitorPlace;
@@ -22,7 +22,16 @@ public class VisitAddModel {
         this.contact = contact;
         this.meetingPurpose = meetingPurpose;
         this.meetingTime = meetingTime;
+        this.nameCompany = nameCompany;
         this.active = active;
+    }
+
+    public String getNameCompany() {
+        return nameCompany;
+    }
+
+    public void setNameCompany(String nameCompany) {
+        this.nameCompany = nameCompany;
     }
 
     public String getRequest() {

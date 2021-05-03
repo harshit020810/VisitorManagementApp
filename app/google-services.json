@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "717707169039",
+    "project_id": "visitor-management-app-1008",
+    "storage_bucket": "visitor-management-app-1008.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717707169039:android:a51bf2be5f9e29782e427a",
+        "android_client_info": {
+          "package_name": "com.example.visitormanagementapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717707169039-ud3esh793ig4kgos1o538b5bcvi95psm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0te2_ERRrXDNySF-75kpCAaSW5QG5aZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717707169039-ud3esh793ig4kgos1o538b5bcvi95psm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
