@@ -216,6 +216,7 @@ public class AddVisitBySecurity extends AppCompatActivity {
             map.put("request", "pending");
             map.put("active", true);
             map.put("nameCompany", binding.visitor.getText().toString()+binding.company.getText().toString());
+            map.put("hostNameDepartment", hostResponse+departmentResponse);
 
            sendOtp(binding.contact.getText().toString());
 

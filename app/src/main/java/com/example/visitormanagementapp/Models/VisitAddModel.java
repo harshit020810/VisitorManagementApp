@@ -2,14 +2,15 @@ package com.example.visitormanagementapp.Models;
 
 public class VisitAddModel {
 
-    private String request, visitorImage, visitorPlace, visitorName, visitorCompany, hostName, hostDepartment, vehicle, assets, contact, meetingPurpose, meetingTime, nameCompany;
+    private String request, visitorImage, visitorPlace, visitorName, visitorCompany, hostName, hostDepartment, vehicle, assets, visitorContact, meetingPurpose, meetingTime, nameCompany, hostNameDepartment;
     private boolean active;
 
     public VisitAddModel() {
     }
 
     public VisitAddModel(String request, String visitorImage, String visitorPlace, String visitorName, String visitorCompany, String hostName,
-                         String hostDepartment, String vehicle, String assets, String contact, String meetingPurpose, String meetingTime, String nameCompany, Boolean active) {
+                         String hostDepartment, String vehicle, String assets, String contact, String meetingPurpose, String meetingTime, String nameCompany,
+                         String hostNameDepartment,Boolean active) {
         this.request = request;
         this.visitorImage = visitorImage;
         this.visitorPlace = visitorPlace;
@@ -19,11 +20,20 @@ public class VisitAddModel {
         this.hostDepartment = hostDepartment;
         this.vehicle = vehicle;
         this.assets = assets;
-        this.contact = contact;
+        this.visitorContact = contact;
         this.meetingPurpose = meetingPurpose;
         this.meetingTime = meetingTime;
         this.nameCompany = nameCompany;
+        this.hostNameDepartment = hostNameDepartment;
         this.active = active;
+    }
+
+    public String getHostNameDepartment() {
+        return hostNameDepartment;
+    }
+
+    public void setHostNameDepartment(String hostNameDepartment) {
+        this.hostNameDepartment = hostNameDepartment;
     }
 
     public String getNameCompany() {
@@ -114,12 +124,12 @@ public class VisitAddModel {
         this.assets = assets;
     }
 
-    public String getContact() {
-        return contact;
+    public String getVisitorContact() {
+        return visitorContact;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setVisitorContact(String visitorContact) {
+        this.visitorContact = visitorContact;
     }
 
     public String getMeetingPurpose() {

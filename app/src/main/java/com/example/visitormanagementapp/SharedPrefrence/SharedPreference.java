@@ -54,19 +54,17 @@ public class SharedPreference {
     }
 
 
-    public List<String> retrieveInformation(Context context, String userStatus){
-        List<String> retrieveList = new ArrayList<>();
+    public String retrieveEmail(Context context, String userStatus){
+        String email;
         if(userStatus.equals("Security")){
             sharedPreferencesSecurity = context.getSharedPreferences("Security",Context.MODE_PRIVATE);
-            retrieveList.add(sharedPreferencesSecurity.getString("Identification Number", ""));
-            retrieveList.add(sharedPreferencesSecurity.getString("Password", ""));
+            email = sharedPreferencesSecurity.getString("Email", "");
         }else{
             sharedPreferencesEmployee = context.getSharedPreferences("Employee" ,Context.MODE_PRIVATE);
-            retrieveList.add(sharedPreferencesEmployee.getString("Identification Number", ""));
-            retrieveList.add(sharedPreferencesEmployee.getString("Password", ""));
+            email = sharedPreferencesEmployee.getString("Email", "");
         }
 
-        return retrieveList;
+        return email;
 
     }
 

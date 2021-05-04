@@ -153,7 +153,9 @@ public class LogIn extends AppCompatActivity {
                                     if(model.getEmail().equals(emailAddress) && model.getPassword().equals(password) && model.getContact().equals(contact)){
                                         if(user.isEmailVerified()){
                                             sharedPreference.saveData(getApplicationContext(), userStatus, emailAddress, password, true);
-                                            startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                                            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                                            intent.putExtra("Email", emailAddress);
+                                            startActivity(intent);
                                             finish();
                                         }else{
                                             Toast.makeText(LogIn.this, "Verify your email First", Toast.LENGTH_SHORT).show();

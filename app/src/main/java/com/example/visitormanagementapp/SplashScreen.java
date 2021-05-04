@@ -33,7 +33,9 @@ public class SplashScreen extends AppCompatActivity {
                     startActivity(new Intent(SplashScreen.this, RegistrationActivity.class));
                 }else{
                     if(sharedPreference.checkSessionFromEmployee(getApplicationContext())){
-                        startActivity(new Intent(SplashScreen.this, HomeScreen.class));
+                        Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
+                        intent.putExtra("Email", sharedPreference.retrieveEmail(getApplicationContext(), "Employee"));
+                        startActivity(intent);
                     }else{
                         startActivity(new Intent(SplashScreen.this, SecurityHomeScreen.class));
                     }
