@@ -1,45 +1,32 @@
 package com.example.visitormanagementapp.Security;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.visitormanagementapp.Adapters.VisitHolder;
-import com.example.visitormanagementapp.Models.RegistrationModel;
+import com.example.visitormanagementapp.Interfaces.ItemClickListener;
 import com.example.visitormanagementapp.Models.VisitAddModel;
 import com.example.visitormanagementapp.R;
-import com.example.visitormanagementapp.Registration.LogIn;
 import com.example.visitormanagementapp.Registration.RegistrationActivity;
 import com.example.visitormanagementapp.databinding.ActivityHomeScreenSecurityBinding;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class SecurityHomeScreen extends AppCompatActivity {
 
@@ -51,6 +38,8 @@ public class SecurityHomeScreen extends AppCompatActivity {
     FirebaseRecyclerAdapter<VisitAddModel, VisitHolder> adapter;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("ADD VISIT");
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +49,13 @@ public class SecurityHomeScreen extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        progressDialog = new ProgressDialog(this);
+
+        progressDialog.setTitle("Loading Info");
+        progressDialog.setMessage("Please wait while we are loading the details");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
 
     }
@@ -80,7 +76,7 @@ public class SecurityHomeScreen extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), AddVisitBySecurity.class));
             return true;
         } else if (id == R.id.checkVisit) {
-            startActivity(new Intent(getApplicationContext(), CheckVisitBySecurity.class));
+            startActivity(new Intent(getApplicationContext(), CheckVisit.class));
             return true;
         } else if (id == R.id.signOut) {
             mAuth.signOut();
@@ -94,6 +90,7 @@ public class SecurityHomeScreen extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         options = new FirebaseRecyclerOptions.Builder<VisitAddModel>()
                 .setQuery(databaseReference, VisitAddModel.class)
                 .build();
@@ -126,6 +123,15 @@ public class SecurityHomeScreen extends AppCompatActivity {
                     holder.activeImage.setImageResource(R.color.red);
                 }
 
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), DetailVisit.class);
+                        intent.putExtra("Contact", model.getVisitorContact());
+                        startActivity(intent);
+                    }
+                });
+
 
             }
 
@@ -139,6 +145,7 @@ public class SecurityHomeScreen extends AppCompatActivity {
 
         binding.recyclerView.setAdapter(adapter);
         adapter.startListening();
+        progressDialog.dismiss();
     }
 
     @Override

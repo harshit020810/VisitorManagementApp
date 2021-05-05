@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckVisitBySecurity extends AppCompatActivity {
+public class CheckVisit extends AppCompatActivity {
 
     ActivityCheckVisitBySecurityBinding binding;
 
@@ -47,6 +48,8 @@ public class CheckVisitBySecurity extends AppCompatActivity {
 
     String visitorNameResponse, visitorCompanyResponse;
 
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,8 @@ public class CheckVisitBySecurity extends AppCompatActivity {
         fillUpCompanyView();
 
         handleClickEvents();
+
+        progressDialog = new ProgressDialog(this);
 
 
     }
@@ -151,6 +156,10 @@ public class CheckVisitBySecurity extends AppCompatActivity {
         }
 
         if (isValid) {
+            progressDialog.setTitle("Checking Request");
+            progressDialog.setMessage("Please wait while we are checking your request");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
             Query query = FirebaseDatabase.getInstance().getReference("ADD VISIT").orderByChild("nameCompany").equalTo(visitorNameResponse + visitorCompanyResponse);
             setUpRecyclerView(query);
         }
@@ -201,6 +210,7 @@ public class CheckVisitBySecurity extends AppCompatActivity {
 
         binding.recyclerView.setAdapter(adapter);
         adapter.startListening();
+        progressDialog.dismiss();
     }
 
 

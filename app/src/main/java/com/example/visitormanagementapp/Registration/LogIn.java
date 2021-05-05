@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ public class LogIn extends AppCompatActivity {
     FirebaseUser user;
     RegistrationModel model;
 
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class LogIn extends AppCompatActivity {
         sharedPreference = new SharedPreference();
 
         handleClickEvent();
+
+        progressDialog = new ProgressDialog(this);
 
 
     }
@@ -103,6 +108,13 @@ public class LogIn extends AppCompatActivity {
 
 
         if(isValid){
+
+            progressDialog.setTitle("Checking Details");
+            progressDialog.setMessage("Please wait while we are verifying your details");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
+
             String emailAddress = activityLogInBinding.email.getText().toString();
             String password = activityLogInBinding.password.getText().toString();
             String contact = activityLogInBinding.contact.getText().toString();
@@ -129,13 +141,16 @@ public class LogIn extends AppCompatActivity {
                                    user = mAuth.getCurrentUser();
                                    if(model.getEmail().equals(emailAddress) && model.getPassword().equals(password) && model.getContact().equals(contact)){
                                        if(user.isEmailVerified()){
+                                           progressDialog.dismiss();
                                            sharedPreference.saveData(getApplicationContext(), userStatus, emailAddress, password, true);
                                            startActivity(new Intent(getApplicationContext(), SecurityHomeScreen.class));
                                            finish();
                                        }else{
+                                           progressDialog.dismiss();
                                            Toast.makeText(LogIn.this, "Verify your email First", Toast.LENGTH_SHORT).show();
                                        }
                                    }else{
+                                       progressDialog.dismiss();
                                        Toast.makeText(LogIn.this, "Please check your credentials", Toast.LENGTH_SHORT).show();
                                    }
                                }
@@ -152,15 +167,18 @@ public class LogIn extends AppCompatActivity {
                                     user = mAuth.getCurrentUser();
                                     if(model.getEmail().equals(emailAddress) && model.getPassword().equals(password) && model.getContact().equals(contact)){
                                         if(user.isEmailVerified()){
+                                            progressDialog.dismiss();
                                             sharedPreference.saveData(getApplicationContext(), userStatus, emailAddress, password, true);
                                             Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                                             intent.putExtra("Email", emailAddress);
                                             startActivity(intent);
                                             finish();
                                         }else{
+                                            progressDialog.dismiss();
                                             Toast.makeText(LogIn.this, "Verify your email First", Toast.LENGTH_SHORT).show();
                                         }
                                     }else{
+                                        progressDialog.dismiss();
                                         Toast.makeText(LogIn.this, "Please check your credentials", Toast.LENGTH_SHORT).show();
                                     }
                                 }

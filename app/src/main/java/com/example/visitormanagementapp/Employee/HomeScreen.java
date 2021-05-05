@@ -4,9 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,11 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.visitormanagementapp.Adapters.VisitHolder;
+import com.example.visitormanagementapp.Interfaces.ItemClickListener;
 import com.example.visitormanagementapp.Models.VisitAddModel;
 import com.example.visitormanagementapp.R;
 import com.example.visitormanagementapp.Registration.RegistrationActivity;
-import com.example.visitormanagementapp.Security.AddVisitBySecurity;
-import com.example.visitormanagementapp.Security.CheckVisitBySecurity;
+import com.example.visitormanagementapp.Security.CheckVisit;
+import com.example.visitormanagementapp.Security.DetailVisit;
 import com.example.visitormanagementapp.databinding.ActivityHomeScreenEmployeeBinding;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -46,21 +47,32 @@ public class HomeScreen extends AppCompatActivity {
 
     String name, department;
 
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_screen_employee);
 
         setSupportActionBar(binding.toolbar);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        progressDialog = new ProgressDialog(this);
+
+        progressDialog.setTitle("Loading Info");
+        progressDialog.setMessage("Please wait while we are loading the details");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.options_employee, menu);
+        getMenuInflater().inflate(R.menu.options, menu);
         return true;
     }
 
@@ -68,7 +80,14 @@ public class HomeScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.signOut) {
+
+        if (id == R.id.addVisit) {
+            startActivity(new Intent(getApplicationContext(), AddVisitByEmployee.class));
+            return true;
+        } else if (id == R.id.checkVisit) {
+            startActivity(new Intent(getApplicationContext(), CheckVisit.class));
+            return true;
+        } else if (id == R.id.signOut) {
             mAuth.signOut();
             startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
             finish();
@@ -157,12 +176,22 @@ public class HomeScreen extends AppCompatActivity {
                             }
                         });
 
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getApplicationContext(), DetailVisit.class);
+                                intent.putExtra("Contact", model.getVisitorContact());
+                                startActivity(intent);
+                            }
+                        });
+
 
                     }
                 };
 
                 binding.recyclerView.setAdapter(adapter);
                 adapter.startListening();
+                progressDialog.dismiss();
 
             }
 

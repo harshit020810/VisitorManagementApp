@@ -9,10 +9,31 @@
         android:background="@drawable/draw_splash"
         tools:context=".Registration.RegistrationActivity">
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="VMS"
+                android:textSize="100sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/dancing_script_bold"/>
+
+
+
+        </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
             android:layout_margin="60dp">
 
             <Button

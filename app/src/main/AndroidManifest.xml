@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VisitorManagementApp">
-        <activity android:name=".Security.CheckVisitBySecurity"></activity>
+        <activity android:name=".Security.DetailVisit"></activity>
+        <activity android:name=".Employee.AddVisitByEmployee" />
+        <activity android:name=".Security.CheckVisit" />
         <activity android:name=".Security.AddVisitBySecurity" />
         <activity android:name=".Employee.HomeScreen" />
         <activity android:name=".Security.SecurityHomeScreen" />

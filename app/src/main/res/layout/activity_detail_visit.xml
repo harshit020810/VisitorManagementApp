@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/draw_splash"
+        tools:context=".Security.DetailVisit">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <RelativeLayout
+                    android:id="@+id/visitorLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp">
+
+                    <TextView
+                        android:id="@+id/visitorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="12dp"
+                        android:text="Visitor Details: "
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/visitorText"
+                        android:layout_margin="16dp"
+                        android:src="@drawable/ic_baseline_person_24"/>
+
+                    <TextView
+                        android:id="@+id/visitorNameText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/image"
+                        android:layout_margin="12dp"
+                        android:text="Name: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/visitorNameAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/visitorNameText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+
+                    <TextView
+                    android:id="@+id/visitorContactText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/visitorNameAnswer"
+                    android:layout_margin="12dp"
+                    android:text="Contact: "
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/visitorContactAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/visitorContactText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:id="@+id/visitorCompanyText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/visitorContactAnswer"
+                        android:layout_margin="12dp"
+                        android:text="Company Name: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/visitorCompanyAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/visitorCompanyText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+
+                    <TextView
+                        android:id="@+id/visitorPlaceText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/visitorCompanyAnswer"
+                        android:layout_margin="12dp"
+                        android:text="Place: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/visitorPlaceAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/visitorPlaceText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/hostLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:layout_below="@id/visitorLayout">
+
+                    <TextView
+                        android:id="@+id/hostText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="12dp"
+                        android:text="Host Details: "
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/hostNameText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/hostText"
+                        android:layout_margin="12dp"
+                        android:text="Name: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/hostNameAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/hostNameText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:id="@+id/hostDepartmentText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/hostNameAnswer"
+                        android:layout_margin="12dp"
+                        android:text="Department: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/hostDepartmentAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/hostDepartmentText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/meetingLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:layout_below="@id/hostLayout">
+
+                    <TextView
+                        android:id="@+id/meetingText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="12dp"
+                        android:text="Meet Details: "
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+
+                    <TextView
+                        android:id="@+id/meetingPurposeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/meetingText"
+                        android:layout_margin="12dp"
+                        android:text="Meeting Purpose: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/meetingPurposeAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/meetingPurposeText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+
+                    <TextView
+                        android:id="@+id/meetingTimeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/meetingPurposeAnswer"
+                        android:layout_margin="12dp"
+                        android:text="Meeting Time: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/meetingTimeAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/meetingTimeText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:layout_below="@id/meetingLayout">
+
+                    <TextView
+                        android:id="@+id/additionalText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="12dp"
+                        android:text="Additional Info: "
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+
+                    <TextView
+                        android:id="@+id/vehicleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/additionalText"
+                        android:layout_margin="12dp"
+                        android:text="Vehicle: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/vehicleAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/vehicleText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+
+                    <TextView
+                        android:id="@+id/assetsText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/vehicleAnswer"
+                        android:layout_margin="12dp"
+                        android:text="Assets: "
+                        android:textSize="18sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/assetsAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/assetsText"
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:textStyle="italic"/>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+</layout>

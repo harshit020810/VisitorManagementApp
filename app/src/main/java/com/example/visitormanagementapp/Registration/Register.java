@@ -5,11 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.visitormanagementapp.R;
@@ -49,6 +51,8 @@ public class Register extends AppCompatActivity {
 
     FirebaseUser user;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,8 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         handleClickEvents();
+
+        progressDialog = new ProgressDialog(this);
 
 
     }
@@ -154,6 +160,11 @@ public class Register extends AppCompatActivity {
 
         if (isValid) {
 
+            progressDialog.setTitle("Registering User");
+            progressDialog.setMessage("Please wait while we register your details");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             String emailAddress = activityRegisterBinding.email.getText().toString();
             String password = activityRegisterBinding.password.getText().toString();
             String name = activityRegisterBinding.name.getText().toString();
@@ -208,17 +219,20 @@ public class Register extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if(task.isSuccessful()){
+                                                        progressDialog.dismiss();
                                                         Toast.makeText(Register.this, "Verification Email has been sent to your email Address", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(getApplicationContext(), LogIn.class);
                                                         startActivity(intent);
                                                         finish();
                                                     }else{
+                                                        progressDialog.dismiss();
                                                         Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
                                                     }
 
                                                 }
                                             });
                                         } else {
+                                            progressDialog.dismiss();
                                             Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -235,17 +249,20 @@ public class Register extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if(task.isSuccessful()){
+                                                        progressDialog.dismiss();
                                                         Toast.makeText(Register.this, "Verification Email has been sent to your email Address", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(getApplicationContext(), LogIn.class);
                                                         startActivity(intent);
                                                         finish();
                                                     }else{
+                                                        progressDialog.dismiss();
                                                         Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
                                                     }
 
                                                 }
                                             });
                                         } else {
+                                            progressDialog.dismiss();
                                             Toast.makeText(Register.this, "Network Error", Toast.LENGTH_SHORT).show();
                                         }
                                     }
